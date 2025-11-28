@@ -6,31 +6,30 @@ on:
     branches:
       - main
 
-
 env:
-  
   IMAGE_NAME: sword-demon-app 
-
   REGISTRY: ghcr.io
-
   GH_USERNAME: ${{ github.actor }} 
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
     
     steps:
-  
+    
     - name: Checkout repository
       uses: actions/checkout@v4
-
 
     - name: Log in to GitHub Container Registry
       uses: docker/login-action@v3
       with:
         registry: ${{ env.REGISTRY }}
         username: ${{ env.GH_USERNAME }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }} 
 
     - name: Extract metadata (tags) for Docker
       id: meta
@@ -38,16 +37,15 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.GH_USERNAME }}/${{ env.IMAGE_NAME }}
 
-
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: .
+        context: . 
         push: true 
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
-    # Розгортання (Приклад для Railway/Render)
+    # CD - Розгортання (Приклад для Railway/Render)
     # ----------------------------------------------------------------------
     # Цей крок є ПРИКЛАДОМ. Його реалізація залежить від обраного хостингу.
     # Найпростіше рішення для Render/Railway:
@@ -58,4 +56,5 @@ jobs:
     - name: Deployment notification (Simulated)
       run: |
         echo "Docker image ${{ steps.meta.outputs.tags }} successfully built and pushed to GHCR."
-        echo "The hosting platform (Render/Railway) will now automatically pull the new image."
+        echo "Render is configured to automatically pull this new image."
+       
