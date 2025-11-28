@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <link rel="shortcut icon" type="x-icon" href="/images/bonfire-darksouls.gif">
+   <link rel="stylesheet" href="/Style2.css">
+   <link href="https://fonts.cdnfonts.com/css/optimus-princeps" rel="stylesheet">
+   <title> Sword Demon: Cart </title>
+</head>
+
+<style>
+  body {
+    background-image: url('/images/Dark-Souls-фэндомы-Pixel-Art-gif-2464970.gif');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+  }
+</style>
+
+<header>
+  <h3>
+    <div class="container">
+      SWORD 
+      <a href="#" class="image-button">
+        <img src="/images/bonfire-darksouls.gif" onclick="playSound()" style="width:50px;height:50px;"> 
+      </a>
+      <script> 
+        function playSound() {
+          new Audio('/sounds/Bonefire.mp3').play();
+        }
+        function playSound2() {
+          new Audio('/sounds/item-get.mp3').play();
+        }
+      </script>
+      DEMON
+
+      <a href="/main_page" class="Button" onmouseenter="playSound2()">HOME</a>
+      <div class="dropdown">
+        <a href="/store" class="Button" onmouseenter="playSound2()">STORE</a>
+        <div class="dropdown-content">
+          <a href="/katanas" class="Button" onmouseenter="playSound2()">Katanas</a>
+          <a href="/knives" class="Button" onmouseenter="playSound2()">Knives</a>
+          <a href="/armory" class="Button" onmouseenter="playSound2()">Armory</a>
+        </div>
+    </div>
+    <a href="/about" class="Button" onmouseenter="playSound2()">ABOUT</a>
+    <a href="/contact" class="Button" onmouseenter="playSound2()">CONTACT</a>
+    <a href="/cart" class="Button" onmouseenter="playSound2()">CART</a>
+  </h3>
+</header>
+
+
+<body>
+
+<div class="cart_wrapper">
+
+  <h1 class="cart_title">YOUR CART</h1>
+
+  <% if (cartProducts.length === 0) { %>
+
+      <div class="empty_cart">
+          <h2>Your inventory is empty, Ashen One...</h2>
+          <p>Add items to your cart to continue your journey.</p>
+          <a href="/store" class="Button">RETURN TO STORE</a>
+      </div>
+
+  <% } else { %>
+
+      <div class="cart_items">
+
+        <% cartProducts.forEach(item => { %>
+          <div class="cart_item">
+              
+              <img src="<%= item.image_url %>" class="cart_item_img">
+
+              <div class="cart_info">
+                  <h2><%= item.name %></h2>
+                  <p class="cart_price"><%= item.price %> $</p>
+                  <p>Quantity: <%= item.quantity %></p>
+
+                  <form action="/cart/remove/<%= item.id %>" method="POST">
+                    <button class="remove_btn">REMOVE</button>
+                  </form>
+              </div>
+
+          </div>
+        <% }) %>
+
+      </div>
+
+      <div class="cart_summary">
+          <h2>Total: <%= total %> $</h2>
+          <button class="Button checkout_btn">CHECKOUT</button>
+      </div>
+
+  <% } %>
+
+</div>
+
+<script>
+document.querySelectorAll('.remove_btn').forEach(button => {
+    button.addEventListener('click', async () => {
+        const productId = button.dataset.id;
+
+        try {
+            const response = await fetch(`/cart/remove/${productId}`, {
+                method: 'POST'
+            });
+
+            const result = await response.json();
+            if(result.success){
+                // Можна просто перезавантажити сторінку
+                window.location.reload();
+            } else {
+                alert('Помилка при видаленні товару!');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Помилка сервера при видаленні товару!');
+        }
+    });
+});
+</script>
+
+</body>
+</html>
