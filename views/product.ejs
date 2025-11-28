@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="stylesheet" href="/Style2.css">
+    <title> Sword Demon: <%= product.name %> </title>
+    </head>
+<body>
+    <header>
+        </header>
+
+    <div class="product_details_container"> 
+        <div class="product_image">
+            <h2> <%= product.name %> </h2>
+            <br>
+            <img src="<%= product.image_url %>" height="600" alt="<%= product.name %>">
+            <br>
+            <br>
+            <h1><%= product.price %> $</h1> 
+            <h1><a href="#" class="Button">ADD TO CARD</a></h1>
+        </div>
+
+        <div class="text_about">
+            <p> 
+                <pre>TOTAL LENGTH, MM: <%= product.total_length %></pre>
+                <pre><hr> BLADE LENGTH, MM: <%= product.blade_length %></pre>
+                <pre><hr> STEEL GRADE: <%= product.steel_grade %></pre>
+                </p>
+        </div>
+    </div>
+
+</body>
+</html>

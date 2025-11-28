@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <link rel="shortcut icon" type="x-icon" href="/images/bonfire-darksouls.gif">
+    <link rel="stylesheet" href="/Style2.css">
+    <link href="https://fonts.cdnfonts.com/css/optimus-princeps" rel="stylesheet">
+    <title> Sword Demon: <%= product.name %> </title>
+</head>
+
+<style>
+    body {
+        /* Зберігаємо ваш фон */
+        background-image: url('/images/Dark-Souls-фэндомы-Pixel-Art-gif-2464970.gif');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: cover;
+    }
+    
+    /* Додатковий стиль для повного опису */
+    .product_info .text_about p {
+        color: #ffffff;
+        text-align: left;
+        padding: 10px 0;
+        line-height: 1.5;
+        font-size: 16px;
+    }
+
+    /* Стиль для кнопки "Назад" */
+    .back-button-container {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+</style>
+
+<header>
+    <h3>
+        <div class="container">
+            SWORD 
+            <a href="#" class="image-button">
+                <img src="/images/bonfire-darksouls.gif" onclick="playSound()" style="width:50px;height:50px;" > 
+            </a>
+            <script> 
+                function playSound() {
+                    var audio = new Audio('/sounds/Bonefire.mp3');
+                    audio.play();
+                }
+                function playSound2() {
+                    var audio = new Audio('/sounds/item-get.mp3');
+                    audio.play();
+                }
+            </script>
+            DEMON
+            <a href="/main_page" class="Button" onmouseenter="playSound2()" target=_self>HOME</a>
+            <div class="dropdown" >
+                <a href="/store" class="Button" onmouseenter="playSound2()" target=_self>STORE</a>
+                <div class="dropdown-content">
+                    <a href="/katanas" class="Button" onmouseenter="playSound2()">Katanas</a>
+                    <a href="/knives" class="Button" onmouseenter="playSound2()">Knives</a>
+                    <a href="/armory" class="Button" onmouseenter="playSound2()">Armory</a>
+                </div>
+            </div>
+            <a href="/about" class="Button" onmouseenter="playSound2()" target=_self>ABOUT</a>
+            <a href="/contact" class="Button" onmouseenter="playSound2()" target=_self>CONTACT</a>
+        </div>
+    </h3>
+</header>
+
+<body>
+    <% 
+        let backUrl = '/store';
+        let backText = 'ДО МАГАЗИНУ';
+        // Визначаємо категорію та встановлюємо посилання
+        if (product.category === 'Katana') {
+            backUrl = '/katanas';
+            backText = '<< НАЗАД ДО КАТЕГОРІЇ КАТАН';
+        } else if (product.category === 'Knives') {
+            backUrl = '/knives';
+            backText = '<< НАЗАД ДО КАТЕГОРІЇ НОЖІВ';
+        } else if (product.category === 'Armory') {
+            backUrl = '/armory';
+            backText = '<< НАЗАД ДО КАТЕГОРІЇ БРОНІ';
+        }
+    %>
+    
+    <div class="back-button-container">
+        <a href="<%= backUrl %>" class="Button" onmouseenter="playSound2()"> <%= backText %> </a>
+    </div>
+
+    <div class="product_info">
+        
+        <h2> <%= product.name %> </h2>
+        <br>
+        
+        <img src="<%= product.image_url %>" height="600" alt="<%= product.name %>">
+        <br><br>
+        
+        <div class="text_about">
+            
+            <h4>Повний Опис:</h4>
+            <p> <%= product.description %> </p>
+            <hr>
+
+            <h4>Технічні Характеристики:</h4>
+            <pre>TOTAL LENGTH, MM:                                                                 <%= product.total_length %></pre>
+            <pre><hr>BLADE LENGTH, MM:                                                                 <%= product.blade_length %></pre>
+            <pre><hr>STEEL GRADE:                                                                      <%= product.steel_grade %></pre>
+            <hr>
+            
+            <h1> <%= product.price %> $</h1>
+            <br>
+            <h1>
+                <a href="#" class="Button" onmouseenter="playSound2()">ADD TO CARD</a>
+            </h1>
+        </div>
+
+    </div>
+</body>
+</html>
