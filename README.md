@@ -32,3 +32,4 @@
    ```bash
    git clone [https://github.com/OlegIvakhiv/Sword-Demon.git](https://github.com/OlegIvakhiv/Sword-Demon.git)
    Перейдіть у папку проєкту: cd Sword-Demon
+   Відкрийте файл index.html у вашому браузері.
